@@ -1,0 +1,27 @@
+public class PlanetGravity {
+    public static double surfaceGravity(double planetDiameter, double planetMass) {
+        double planetGravity = 0.0;
+        double planetRadius = ((planetDiameter/2)*1000);
+        planetGravity = (((6.67E-11) * (planetMass))/Math.pow(planetRadius,2));
+        planetGravity = (((int) (planetGravity * 100.0))/100.0);
+        
+        return planetGravity;
+    }
+    public static void programTitle() {
+        System.out.println("\t \t Planetary Data");
+        System.out.println("Planet \t Diameter(km) \t Mass(kg) \t g(m/s^2)");
+        System.out.println("-------------------------------------------------");
+    }
+    public static void printPlanetData(String planetName, double planetDiameter, double planetMass, double planetGravity) {
+        System.out.println(planetName + "\t" + planetDiameter + "\t" + planetMass + "\t \t" + planetGravity);
+    }
+    public static void main(String[] args) {
+        String planetName = "Jupiter";
+        double planetDiameter = 142984;
+        double planetMass = (1.900E27);
+        double planetGravity = surfaceGravity(planetDiameter,planetMass);
+        
+        programTitle();
+        printPlanetData(planetName, planetDiameter, planetMass, planetGravity);
+    }
+}
