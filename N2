@@ -1,0 +1,156 @@
+import java.lang.Math;
+public class MathTrick {
+        public static String myString = "";
+        public static int num = 0;
+        public static int firstDigit = 0;
+        public static int middleDigit = 0;
+        public static int lastDigit = 0;
+        public static int reversedNum = 0;
+        public static int newNum = 0;
+        public static int newReversedNum = 0;
+        public static int numMil = 0;
+        public static int asciiValue = 0;
+        public static String trickWord = "";
+        
+        
+    /**
+     * 
+     ******  DO NOT USE ARRAYS OR CONVERT NUMBERS TO STRING UNTIL STEP 7 ******
+     *
+     */
+    
+    // Step 1) Creates a random 3 digit (100-999) number where the first and last digit differ by more than one
+    // Hint: Use Math.random() to create number in the correct range
+    //          use modulus to find the last digit and divide by 100 for the first digit.
+    //         calculate the difference, which method can you use so it doesn't matter how the numbers are subtract?
+    //          while the difference of the digits is less than 2, create a new random number and try again
+
+    public static int getRandomNum() 
+    {   
+
+        // complete the method
+        while ( Math.abs(firstDigit-lastDigit) < 2){
+            num = (int) (Math.random() * (999-100+1)+100);
+            firstDigit = num/100;
+            lastDigit = num%10;
+            middleDigit = (((num-(firstDigit*100))-lastDigit)/10);
+        }
+        
+        return num;
+    }
+
+    // Step 2 & 4) reverse the digits of a number
+    // Hint: to reverse a number without converting it to a String:
+    //        create a new variable to store the reversed number
+    //        while the original number > 0
+    //        for each digit, multiply the new variable by 10 (to make room for the new digit) 
+    //        then add the last digit (remember modulus?) to the new variable
+    //        divide the original number by 10 to get rid of the last digit
+    //    Ex: 584--> (0 x 10) + 4 = 4 ; 58--> (4 x 10) + 8 = 48; 5-->(48 x 10) + 5 = 485
+
+    public static int reverseDigits () {
+        
+        reversedNum = ((lastDigit*100) + (middleDigit * 10) + firstDigit);
+        
+        return reversedNum;
+        // complete the method
+    }
+    
+    public static int newReverseDigits (int newNum) {
+        
+        firstDigit = newNum/100;
+        lastDigit = newNum%10;
+        middleDigit = (((newNum-(firstDigit*100))-lastDigit)/10);
+        
+        newReversedNum = ((lastDigit*100) + (middleDigit * 10) + firstDigit);
+        
+        return newReversedNum;
+        // complete the method
+    }
+    // Step 7) replace characters in a String according to the chart
+    // Hint: Loop through the String and "replace" the numbers with the corresponding letter
+    public static String replaceLtr()
+    {
+        myString = String.valueOf(numMil);
+        for (int i = 0; i < myString.length(); i++)
+        {
+            asciiValue = (int)myString.charAt(i)-48;
+            if (asciiValue == 0) {
+                trickWord = trickWord + "Y";
+            }
+            else if (asciiValue == 1) {
+                trickWord = trickWord + "M";
+            }
+            else if (asciiValue == 2) {
+                trickWord = trickWord + "P";
+            }
+            else if (asciiValue == 3) {
+                trickWord = trickWord + "L";
+            }
+            else if (asciiValue == 4) {
+                trickWord = trickWord + "R";
+            }
+            else if (asciiValue == 5) {
+                trickWord = trickWord + "O";
+            }
+            else if (asciiValue == 6) {
+                trickWord = trickWord + "F";
+            }
+            else if (asciiValue == 7) {
+                trickWord = trickWord + "A";
+            }
+            else if (asciiValue == 8) {
+                trickWord = trickWord + "I";
+            }
+            else if (asciiValue == 9) {
+                trickWord = trickWord + "B";
+            }
+        }
+        return myString;
+        // complete the method        
+    }
+    
+    // Step 8) reverse the letters in a String
+    // Hint: start with an empty String variable 
+    //         loop through the original word   
+    //         add one letter at time to the new variable using concatenation and .substring()
+    public static String reverseString(String str) {
+        String reverseTrickWord = "";
+        
+        for (int i = str.length()-1; i >= 0; i--) {
+            reverseTrickWord = reverseTrickWord + trickWord.substring(i, i+1);
+        }
+        return reverseTrickWord;
+        // complete the method
+    }
+        
+    public static void main(String[] args) 
+    {
+        //        1.    Generate a random 3-digit number so that the first and third digits differ by more than one.
+        System.out.println("The starting number: " + getRandomNum());
+        //        2.    Now reverse the digits to form a second number.
+        System.out.println("The reverse number: " + reverseDigits());
+        //        3    Subtract the smaller number from the larger one.
+        int newNum = Math.abs(num-reversedNum);
+        System.out.println("The difference of the two: " + newNum);
+        //        4.    Now reverse the digits in the answer you got in step 3 and add it to that number.
+        System.out.println("The difference reversed: " + newReverseDigits(newNum));
+        int numThree = Math.abs(newNum + newReversedNum);
+        System.out.println("The reversed difference added to the difference: " + numThree);
+        //        5.    Multiply by one million.
+        numMil = (numThree * 1000000);
+        System.out.println("The number times 1 million: " + numMil);
+        //        6.    Subtract 733,361,573.
+        numMil = (numMil - 733361573);
+        System.out.println("The number subtracted by 733361573: " + numMil);
+        //        7.    Convert the number to a string in order to replace the numbers with letters.
+        //                 Ex: String str = String.valueOf(myNumber);
+        //            Then, replace each of the digits in your answer, with the letter it corresponds to using the table in the instructions.
+        replaceLtr();
+        System.out.println("The replaced string: " + trickWord);
+        //        8.    Now reverse the letters in the string to read your message backward.
+        String finalWord = reverseString(trickWord);
+        System.out.println("The final word: " + finalWord);
+        //System.out.println(finalWord);
+    } // end main
+} // end class
